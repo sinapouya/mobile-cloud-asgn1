@@ -61,10 +61,10 @@ public class VideoFileManager {
 	}
 	
 	// Private helper method for resolving video file paths
-	private Path getVideoPath(Video v){
+	public Path getVideoPath(Video v){
 		assert(v != null);
 		
-		return targetDir_.resolve("video"+v.getId()+".mpg");
+		return targetDir_.resolve("video"+v.getId()+".mp4");
 	}
 	
 	/**
@@ -89,12 +89,22 @@ public class VideoFileManager {
 	 * @param out
 	 * @throws IOException 
 	 */
-	public void copyVideoData(Video v, OutputStream out) throws IOException {
+	public void copyVideoData(Video v, OutputStream out){
 		Path source = getVideoPath(v);
-		if(!Files.exists(source)){
-			throw new FileNotFoundException("Unable to find the referenced video file for videoId:"+v.getId());
+		if(Files.exists(source)){
+			try {
+				Files.copy(source, out);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}else{
+			try {
+				throw new FileNotFoundException("Unable to find the referenced video file for videoId:"+v.getId());
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			}
 		}
-		Files.copy(source, out);
+
 	}
 	
 	/**

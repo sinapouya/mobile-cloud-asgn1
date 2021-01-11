@@ -170,7 +170,8 @@ public interface VideoSvcApi {
 	 */
 	@Multipart
 	@POST(VIDEO_DATA_PATH)
-	public VideoStatus setVideoData(@Path(ID_PARAMETER) long id, @Part(DATA_PARAMETER) TypedFile videoData);
+	public VideoStatus setVideoData(@Path(ID_PARAMETER) long id,
+									@Part(DATA_PARAMETER) TypedFile videoData);
 	
 	/**
 	 * This endpoint should return the video data that has been associated with
